@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Menu from './Menu';
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
     return (
@@ -24,6 +25,9 @@ const Navbar = () => {
                         <Link href="/">About</Link>
                         <Link href="/">Contact</Link>
                     </div>
+                </div>
+                <div className="w-2/3 xl:w-1/2 flex items-center justify-between gap-8">
+                    <SearchBar />
                 </div>
             </div>
         </div>
