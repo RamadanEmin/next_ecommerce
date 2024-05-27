@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import CartModal from './CartModal';
 
 const NavIcons = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -55,6 +56,7 @@ const NavIcons = () => {
                     2
                 </div>
             </div>
+            {isCartOpen && <CartModal />}
         </div>
     );
 };
