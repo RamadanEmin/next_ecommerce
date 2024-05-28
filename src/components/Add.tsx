@@ -6,6 +6,15 @@ const Add = () => {
     const [quantity, setQuantity] = useState(0);
     const stock = 4;
 
+    const handleQuantity = (type: 'i' | 'd') => {
+        if (type === 'd' && quantity > 1) {
+            setQuantity((prev) => prev - 1);
+        }
+        if (type === 'i' && quantity < stock) {
+            setQuantity((prev) => prev + 1);
+        }
+    };
+
     return (
         <div className="flex flex-col gap-4">
             <h4 className="font-medium">Choose a Quantity</h4>
@@ -14,12 +23,14 @@ const Add = () => {
                     <div className="bg-gray-100 py-2 px-4 rounded-3xl flex items-center justify-between w-32">
                         <button
                             className="cursor-pointer text-xl disabled:cursor-not-allowed disabled:opacity-20"
+                            onClick={() => handleQuantity('d')}
                         >
                             -
                         </button>
                         {quantity}
                         <button
                             className="cursor-pointer text-xl disabled:cursor-not-allowed disabled:opacity-20"
+                            onClick={() => handleQuantity('i')}
                         >
                             +
                         </button>
