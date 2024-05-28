@@ -1,4 +1,5 @@
-import ProductImages from "@/components/ProductImages";
+import CustomizeProducts from '@/components/CustomizeProducts';
+import ProductImages from '@/components/ProductImages';
 
 const SinglePage = () => {
     return (
@@ -24,6 +25,8 @@ const SinglePage = () => {
                         $49
                     </h2>
                 </div>
+                <div className="h-[2px] bg-gray-100" />
+                <CustomizeProducts />
                 <div className="h-[2px] bg-gray-100" />
                 <div className="text-sm" >
                     <h4 className="font-medium mb-4">Title</h4>
