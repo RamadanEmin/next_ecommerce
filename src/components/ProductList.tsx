@@ -4,9 +4,9 @@ import { wixClientServer } from '@/lib/wixClientServer';
 import { products } from '@wix/stores';
 import DOMPurify from 'isomorphic-dompurify';
 
-const PRODUCT_PER_PAGE = 8;
+const PRODUCT_PER_PAGE = 12;
 
-const ProductList = async ({ categoryId, limit }: { categoryId: string; limit?: number; }) => {
+const ProductList = async ({ categoryId, limit, searchParams }: { categoryId: string; limit?: number; searchParams?: any; }) => {
     const wixClient = await wixClientServer();
     const res = await wixClient.products
         .queryProducts()
