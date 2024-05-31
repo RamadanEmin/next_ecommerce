@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { wixClientServer } from '@/lib/wixClientServer';
 import { products } from '@wix/stores';
 import DOMPurify from 'isomorphic-dompurify';
+import Pagination from './Pagination';
 
 const PRODUCT_PER_PAGE = 12;
 
@@ -79,6 +80,7 @@ const ProductList = async ({ categoryId, limit, searchParams }: { categoryId: st
                     </button>
                 </Link>
             ))}
+            <Pagination />
         </div>
     );
 };
