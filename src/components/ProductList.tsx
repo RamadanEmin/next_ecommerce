@@ -7,6 +7,7 @@ import DOMPurify from 'isomorphic-dompurify';
 const PRODUCT_PER_PAGE = 12;
 
 const ProductList = async ({ categoryId, limit, searchParams }: { categoryId: string; limit?: number; searchParams?: any; }) => {
+    let res;
     const wixClient = await wixClientServer();
 
     const productQuery = wixClient.products
@@ -22,19 +23,17 @@ const ProductList = async ({ categoryId, limit, searchParams }: { categoryId: st
         const [sortType, sortBy] = searchParams.sort.split(' ');
 
         if (sortType === 'asc') {
-            productQuery.ascending(sortBy);
+            res = await productQuery.ascending(sortBy).find();
+        } else if (sortType === 'desc') {
+            res = await productQuery.descending(sortBy).find();
         }
-
-        if (sortType === 'desc') {
-            productQuery.descending(sortBy);
-        }
+    } else {
+        res = await productQuery.find();
     }
-
-    const res = await productQuery.find();
 
     return (
         <div className="mt-12 flex gap-x-8 gap-y-16 justify-between flex-wrap">
-            {res.items.map((product: products.Product) => (
+            {res?.items.map((product: products.Product) => (
                 <Link
                     href={"/" + product.slug}
                     className="w-full flex flex-col gap-4 sm:w-[45%] lg:w-[22%]"
