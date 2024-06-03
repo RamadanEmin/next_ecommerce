@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useWixClient } from '@/hooks/useWixClient';
 
 enum MODE {
     LOGIN = 'LOGIN',
@@ -10,6 +11,8 @@ enum MODE {
 }
 
 const LoginPage = () => {
+    const wixClient = useWixClient();
+
     const [mode, setMode] = useState(MODE.LOGIN);
 
     const [username, setUsername] = useState('');
@@ -36,9 +39,60 @@ const LoginPage = () => {
                 ? 'Reset'
                 : 'Verify';
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError('');
+
+        try {
+            let response;
+
+            switch (mode) {
+                case MODE.LOGIN:
+                    response = await wixClient.auth.login({
+                        email,
+                        password
+                    });
+
+                    break;
+                case MODE.REGISTER:
+                    response = await wixClient.auth.register({
+                        email,
+                        password,
+                        profile: { nickname: username }
+                    });
+
+                    break;
+                case MODE.RESET_PASSWORD:
+                    response = await wixClient.auth.sendPasswordResetEmail(
+                        email,
+                        window.location.href
+                    );
+
+                    setMessage('Password reset email sent. Please check your e-mail.');
+                    break;
+                case MODE.EMAIL_VERIFICATION:
+                    response = await wixClient.auth.processVerification({
+                        verificationCode: emailCode,
+                    });
+
+                    break;
+                default:
+                    break;
+            }
+
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+            setError('Something went wrong!');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="h-[calc(100vh-80px)] px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 flex items-center justify-center">
-            <form className="flex flex-col gap-8">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                 <h1 className="text-2xl font-semibold">{formTitle}</h1>
                 {mode === MODE.REGISTER ? (
                     <div className="flex flex-col gap-2">
