@@ -83,7 +83,7 @@ const LoginPage = () => {
                     break;
                 case MODE.EMAIL_VERIFICATION:
                     response = await wixClient.auth.processVerification({
-                        verificationCode: emailCode,
+                        verificationCode: emailCode
                     });
 
                     break;
