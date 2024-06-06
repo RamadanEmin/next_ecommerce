@@ -2,6 +2,7 @@ import { wixClientServer } from '@/lib/wixClientServer';
 import { members } from '@wix/members';
 import Link from 'next/link';
 import { format } from 'timeago.js';
+import UpdateButton from '@/components/UpdateButton';
 
 const ProfilePage = async () => {
     const wixClient = await wixClientServer();
@@ -19,8 +20,6 @@ const ProfilePage = async () => {
             filter: { 'buyerInfo.contactId': { $eq: user.member?.contactId } }
         }
     });
-
-    console.log(user);
 
     return (
         <div className="flex flex-col md:flex-row gap-24 md:h-[calc(100vh-180px)] items-center px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
@@ -66,6 +65,7 @@ const ProfilePage = async () => {
                         placeholder={user.member?.loginEmail || 'john@gmail.com'}
                         className="ring-1 ring-gray-300 rounded-md p-2 max-w-96"
                     />
+                    <UpdateButton />
                 </form>
             </div>
             <div className="w-full md:w-1/2">
